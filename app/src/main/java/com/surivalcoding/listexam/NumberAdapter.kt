@@ -13,10 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 
 class NumberAdapter(
     private val dataSet: List<String>,
+    private val clickedItems: Set<String>,
     private val onClicked: (String) -> Unit,
 ) : RecyclerView.Adapter<NumberAdapter.ViewHolder>() {
-
-    private val clickedItems = mutableSetOf<String>()
 
     /**
      * Provide a reference to the type of views that you are using
@@ -64,8 +63,6 @@ class NumberAdapter(
             // 콜백으로 처리하는 부분으로 돌려줘야 함
 //            println(dataSet[viewHolder.adapterPosition])
             onClicked(dataSet[viewHolder.adapterPosition])
-            viewHolder.itemView.setBackgroundColor(Color.WHITE)
-            clickedItems.add(dataSet[viewHolder.adapterPosition])
         }
 
     }

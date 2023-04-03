@@ -13,17 +13,25 @@ class MainActivity : AppCompatActivity() {
 
         // data 준비
         val items = (1..100).toList()
-
-        // 어댑터(data - view 연결) 준비
-        val adapter = NumberAdapter(
-            items.map { it.toString() }
-        ) {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-        }
+        // 클릭된 아이템들
+        val clickedItems = mutableSetOf<String>()
 
         // View 준비
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
+
+        // 어댑터(data - view 연결) 준비
+        val adapter = NumberAdapter(
+            dataSet = items.map { it.toString() },
+            clickedItems = clickedItems,
+        ) {
+            clickedItems.add(it)
+
+            // UI 갱신
+            recyclerView.adapter?.notifyDataSetChanged()
+
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
 
         // View에 Adapter 연결
         recyclerView.adapter = adapter
