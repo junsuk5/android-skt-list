@@ -2,6 +2,7 @@ package com.surivalcoding.listexam
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -16,7 +17,9 @@ class MainActivity : AppCompatActivity() {
         // 어댑터(data - view 연결) 준비
         val adapter = NumberAdapter(
             items.map { it.toString() }
-        )
+        ) {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
 
         // View 준비
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)

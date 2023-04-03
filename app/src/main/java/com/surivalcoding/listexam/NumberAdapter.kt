@@ -7,7 +7,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class NumberAdapter(private val dataSet: List<String>) :
+//interface OnClickListenre {
+//    void onClicked(String value);
+//}
+
+class NumberAdapter(
+    private val dataSet: List<String>,
+    private val onClicked: (String) -> Unit,
+) :
         RecyclerView.Adapter<NumberAdapter.ViewHolder>() {
 
     /**
@@ -18,7 +25,6 @@ class NumberAdapter(private val dataSet: List<String>) :
         val textView: TextView
 
         init {
-            // Define click listener for the ViewHolder's View
             textView = view.findViewById(R.id.textView)
         }
     }
@@ -34,7 +40,7 @@ class NumberAdapter(private val dataSet: List<String>) :
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        println(position)
+//        println(position)
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
@@ -42,9 +48,19 @@ class NumberAdapter(private val dataSet: List<String>) :
 
         if (position % 2 == 1) {
             viewHolder.textView.setTextColor(Color.RED)
+            viewHolder.itemView.setBackgroundColor(Color.BLUE)
         } else {
             viewHolder.textView.setTextColor(Color.GRAY)
+            viewHolder.itemView.setBackgroundColor(Color.RED)
         }
+
+        // 클릭 이벤트 정의
+        viewHolder.itemView.setOnClickListener {
+            // 콜백으로 처리하는 부분으로 돌려줘야 함
+//            println(dataSet[viewHolder.adapterPosition])
+            onClicked(dataSet[viewHolder.adapterPosition])
+        }
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)
