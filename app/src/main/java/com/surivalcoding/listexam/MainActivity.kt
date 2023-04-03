@@ -14,9 +14,8 @@ class MainActivity : AppCompatActivity() {
         val items = (1..100).toList()
 
         // 어댑터(data - view 연결) 준비
-        val adapter = CustomAdapter(
+        val adapter = NumberAdapter(
             items.map { it.toString() }
-                .toTypedArray()
         )
 
         // View 준비

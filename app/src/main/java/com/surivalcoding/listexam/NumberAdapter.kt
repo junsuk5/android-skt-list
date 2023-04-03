@@ -1,13 +1,14 @@
 package com.surivalcoding.listexam
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CustomAdapter(private val dataSet: Array<String>) :
-        RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
+class NumberAdapter(private val dataSet: List<String>) :
+        RecyclerView.Adapter<NumberAdapter.ViewHolder>() {
 
     /**
      * Provide a reference to the type of views that you are using
@@ -33,10 +34,17 @@ class CustomAdapter(private val dataSet: Array<String>) :
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+        println(position)
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.textView.text = dataSet[position]
+
+        if (position % 2 == 1) {
+            viewHolder.textView.setTextColor(Color.RED)
+        } else {
+            viewHolder.textView.setTextColor(Color.GRAY)
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
