@@ -20,27 +20,21 @@ class MainActivity : AppCompatActivity() {
 
         // 어댑터(data - view 연결) 준비
 
+        val adapter = NumberAdapter(
+            onClicked = {
+                viewModel.clickItem(it)
+                Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
+            },
+            onLongClicked = {
+                viewModel.removeItem(it)
+            }
+        )
+
+        // View에 Adapter 연결
+        recyclerView.adapter = adapter
 
         viewModel.state.observe(this) { state ->
-            val adapter = NumberAdapter(
-                dataSet = state.items.map { it.toString() },
-                clickedItems = state.clickedItems,
-                onClicked = {
-                    viewModel.clickItem(it)
-
-//                    // UI 갱신
-//                    recyclerView.adapter?.notifyDataSetChanged()
-
-                    Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-                },
-                onLongClicked = {
-                    println()
-                    viewModel.removeItem(it)
-                }
-            )
-
-            // View에 Adapter 연결
-            recyclerView.adapter = adapter
+            adapter.submitList(state)
         }
     }
 }

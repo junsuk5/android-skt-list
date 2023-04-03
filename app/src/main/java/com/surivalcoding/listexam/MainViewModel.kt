@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModel
 // 클릭된 아이템들
 data class MainUiState(
     val items: List<Int> = emptyList(),
-    val clickedItems: Set<String> = emptySet(),
+    val clickedItems: Set<Int> = emptySet(),
 )
 
 class MainViewModel : ViewModel() {
@@ -24,7 +24,7 @@ class MainViewModel : ViewModel() {
         get() = _state
 
 
-    fun clickItem(item: String) {
+    fun clickItem(item: Int) {
         val newClickedItems = state.value!!.clickedItems.toMutableSet()
         if (state.value!!.clickedItems.contains(item)) {
             newClickedItems.remove(item)
@@ -41,9 +41,9 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun removeItem(item: String) {
+    fun removeItem(item: Int) {
         val newItems = state.value!!.items.toMutableList()
-        newItems.remove(item.toInt())
+        newItems.remove(item)
 
         _state.value = state.value!!.copy(
             items = newItems

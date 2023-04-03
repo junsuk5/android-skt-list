@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 //}
 
 class NumberAdapter(
-    private val dataSet: List<String>,
-    private val clickedItems: Set<String>,
-    private val onClicked: (String) -> Unit,
-    private val onLongClicked: (String) -> Unit,
+    private var dataSet: List<Int> = emptyList(),
+    private var clickedItems: Set<Int> = emptySet(),
+    private val onClicked: (Int) -> Unit,
+    private val onLongClicked: (Int) -> Unit,
 ) : RecyclerView.Adapter<NumberAdapter.ViewHolder>() {
 
     /**
@@ -45,7 +45,7 @@ class NumberAdapter(
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.textView.text = dataSet[position]
+        viewHolder.textView.text = dataSet[position].toString()
 
         if (position % 2 == 1) {
             viewHolder.textView.setTextColor(Color.RED)
@@ -75,5 +75,11 @@ class NumberAdapter(
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
+
+    fun submitList(state: MainUiState) {
+        dataSet = state.items
+        clickedItems = state.clickedItems
+        notifyDataSetChanged()
+    }
 
 }
