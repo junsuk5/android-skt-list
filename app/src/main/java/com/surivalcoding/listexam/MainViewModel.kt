@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 
 class MainViewModel : ViewModel() {
     // data 준비
-    val items = (1..100).toList()
+    val items = (1..100).toMutableList()
     // 클릭된 아이템들
     val clickedItems = mutableSetOf<String>()
 

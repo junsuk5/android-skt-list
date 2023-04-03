@@ -65,6 +65,11 @@ class NumberAdapter(
             onClicked(dataSet[viewHolder.adapterPosition])
         }
 
+        viewHolder.itemView.setOnLongClickListener {
+            println("롱클릭!!!")
+            return@setOnLongClickListener true
+        }
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)
