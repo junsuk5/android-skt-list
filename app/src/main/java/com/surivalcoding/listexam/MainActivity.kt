@@ -3,18 +3,16 @@ package com.surivalcoding.listexam
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
+    private val viewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        // data 준비
-        val items = (1..100).toList()
-        // 클릭된 아이템들
-        val clickedItems = mutableSetOf<String>()
 
         // View 준비
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
@@ -22,14 +20,10 @@ class MainActivity : AppCompatActivity() {
 
         // 어댑터(data - view 연결) 준비
         val adapter = NumberAdapter(
-            dataSet = items.map { it.toString() },
-            clickedItems = clickedItems,
+            dataSet = viewModel.items.map { it.toString() },
+            clickedItems = viewModel.clickedItems,
         ) {
-            if (clickedItems.contains(it)) {
-                clickedItems.remove(it)
-            } else {
-                clickedItems.add(it)
-            }
+            viewModel.clickItem(it)
 
             // UI 갱신
             recyclerView.adapter?.notifyDataSetChanged()
