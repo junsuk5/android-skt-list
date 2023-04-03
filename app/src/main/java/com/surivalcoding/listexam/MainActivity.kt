@@ -25,7 +25,11 @@ class MainActivity : AppCompatActivity() {
             dataSet = items.map { it.toString() },
             clickedItems = clickedItems,
         ) {
-            clickedItems.add(it)
+            if (clickedItems.contains(it)) {
+                clickedItems.remove(it)
+            } else {
+                clickedItems.add(it)
+            }
 
             // UI 갱신
             recyclerView.adapter?.notifyDataSetChanged()
