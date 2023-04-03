@@ -15,6 +15,7 @@ class NumberAdapter(
     private val dataSet: List<String>,
     private val clickedItems: Set<String>,
     private val onClicked: (String) -> Unit,
+    private val onLongClicked: (String) -> Unit,
 ) : RecyclerView.Adapter<NumberAdapter.ViewHolder>() {
 
     /**
@@ -66,7 +67,7 @@ class NumberAdapter(
         }
 
         viewHolder.itemView.setOnLongClickListener {
-            println("롱클릭!!!")
+            onLongClicked(dataSet[viewHolder.adapterPosition])
             return@setOnLongClickListener true
         }
 

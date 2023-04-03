@@ -19,19 +19,28 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         // 어댑터(data - view 연결) 준비
-        val adapter = NumberAdapter(
-            dataSet = viewModel.items.map { it.toString() },
-            clickedItems = viewModel.clickedItems,
-        ) {
-            viewModel.clickItem(it)
 
-            // UI 갱신
-            recyclerView.adapter?.notifyDataSetChanged()
 
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        viewModel.state.observe(this) { state ->
+            val adapter = NumberAdapter(
+                dataSet = state.items.map { it.toString() },
+                clickedItems = state.clickedItems,
+                onClicked = {
+                    viewModel.clickItem(it)
+
+//                    // UI 갱신
+//                    recyclerView.adapter?.notifyDataSetChanged()
+
+                    Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                },
+                onLongClicked = {
+                    println()
+                    viewModel.removeItem(it)
+                }
+            )
+
+            // View에 Adapter 연결
+            recyclerView.adapter = adapter
         }
-
-        // View에 Adapter 연결
-        recyclerView.adapter = adapter
     }
 }
