@@ -14,8 +14,9 @@ import androidx.recyclerview.widget.RecyclerView
 class NumberAdapter(
     private val dataSet: List<String>,
     private val onClicked: (String) -> Unit,
-) :
-        RecyclerView.Adapter<NumberAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<NumberAdapter.ViewHolder>() {
+
+    private val clickedItems = mutableSetOf<String>()
 
     /**
      * Provide a reference to the type of views that you are using
@@ -33,7 +34,7 @@ class NumberAdapter(
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
-                .inflate(R.layout.text_row_item, viewGroup, false)
+            .inflate(R.layout.text_row_item, viewGroup, false)
 
         return ViewHolder(view)
     }
@@ -54,11 +55,17 @@ class NumberAdapter(
             viewHolder.itemView.setBackgroundColor(Color.RED)
         }
 
+        if (clickedItems.contains(dataSet[position])) {
+            viewHolder.itemView.setBackgroundColor(Color.WHITE)
+        }
+
         // 클릭 이벤트 정의
         viewHolder.itemView.setOnClickListener {
             // 콜백으로 처리하는 부분으로 돌려줘야 함
 //            println(dataSet[viewHolder.adapterPosition])
             onClicked(dataSet[viewHolder.adapterPosition])
+            viewHolder.itemView.setBackgroundColor(Color.WHITE)
+            clickedItems.add(dataSet[viewHolder.adapterPosition])
         }
 
     }
