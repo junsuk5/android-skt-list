@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         viewModel.state.observe(this) { state ->
-            adapter.submitList(state)
+            adapter.submitList(state.items)
         }
     }
 }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.surivalcoding.listexam.data.Number
 import androidx.recyclerview.widget.RecyclerView
 
 //interface OnClickListenre {
@@ -12,10 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 //}
 
 class NumberAdapter(
-    private var dataSet: List<Int> = emptyList(),
-    private var clickedItems: Set<Int> = emptySet(),
-    private val onClicked: (Int) -> Unit,
-    private val onLongClicked: (Int) -> Unit,
+    private var dataSet: List<Number> = emptyList(),
+    private val onClicked: (Number) -> Unit,
+    private val onLongClicked: (Number) -> Unit,
 ) : RecyclerView.Adapter<NumberAdapter.ViewHolder>() {
 
     /**
@@ -45,7 +45,9 @@ class NumberAdapter(
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.textView.text = dataSet[position].toString()
+        val number = dataSet[position]
+
+        viewHolder.textView.text = number.value.toString()
 
         if (position % 2 == 1) {
             viewHolder.textView.setTextColor(Color.RED)
@@ -55,7 +57,7 @@ class NumberAdapter(
             viewHolder.itemView.setBackgroundColor(Color.RED)
         }
 
-        if (clickedItems.contains(dataSet[position])) {
+        if (number.isSelected) {
             viewHolder.itemView.setBackgroundColor(Color.WHITE)
         }
 
@@ -76,9 +78,8 @@ class NumberAdapter(
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 
-    fun submitList(state: MainUiState) {
-        dataSet = state.items
-        clickedItems = state.clickedItems
+    fun submitList(numbers: List<Number>) {
+        dataSet = numbers
         notifyDataSetChanged()
     }
 
