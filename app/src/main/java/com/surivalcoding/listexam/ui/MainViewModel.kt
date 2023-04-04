@@ -1,12 +1,9 @@
-package com.surivalcoding.listexam
+package com.surivalcoding.listexam.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.surivalcoding.listexam.data.Number
 import com.surivalcoding.listexam.data.NumberRepository
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 

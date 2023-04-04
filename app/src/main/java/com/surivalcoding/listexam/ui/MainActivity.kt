@@ -1,4 +1,4 @@
-package com.surivalcoding.listexam
+package com.surivalcoding.listexam.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,8 +6,8 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.surivalcoding.listexam.R
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()

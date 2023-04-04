@@ -1,4 +1,4 @@
-package com.surivalcoding.listexam
+package com.surivalcoding.listexam.ui
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import com.surivalcoding.listexam.data.Number
 import androidx.recyclerview.widget.RecyclerView
+import com.surivalcoding.listexam.R
 
 //interface OnClickListenre {
 //    void onClicked(String value);
