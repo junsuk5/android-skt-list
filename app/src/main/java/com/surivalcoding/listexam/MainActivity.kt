@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         // View에 Adapter 연결
         recyclerView.adapter = adapter
 
-        viewModel.state.observe(this) { state ->
+        viewModel.state.asLiveData().observe(this) { state ->
             adapter.submitList(state.items)
         }
     }

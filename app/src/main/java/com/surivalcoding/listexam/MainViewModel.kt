@@ -5,6 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.surivalcoding.listexam.data.Number
 import com.surivalcoding.listexam.data.NumberRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 // state 패턴
 // View에 보여주는 용도
@@ -18,30 +22,35 @@ data class MainUiState(
 class MainViewModel : ViewModel() {
     private val repository = NumberRepository()
 
-    private var _state = MutableLiveData(MainUiState())
-    val state: LiveData<MainUiState>
-        get() = _state
+    private var _state = MutableStateFlow(MainUiState())
+    val state = _state.asStateFlow()
 
     init {
         // 초기값 설정
-        _state.value = state.value!!.copy(
-            items = repository.findAll()
-        )
+        _state.update {
+            it.copy(
+                items = repository.findAll()
+            )
+        }
     }
 
     fun clickItem(item: Number) {
         repository.update(item)
 
-        _state.value = state.value!!.copy(
-            items = repository.findAll()
-        )
+        _state.update {
+            it.copy(
+                items = repository.findAll()
+            )
+        }
     }
 
     fun removeItem(item: Number) {
         repository.delete(item)
 
-        _state.value = state.value!!.copy(
-            items = repository.findAll()
-        )
+        _state.update {
+            it.copy(
+                items = repository.findAll()
+            )
+        }
     }
 }
