@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil.ItemCallback
+import androidx.recyclerview.widget.ListAdapter
 import com.surivalcoding.listexam.data.Number
 import androidx.recyclerview.widget.RecyclerView
 
@@ -13,10 +15,19 @@ import androidx.recyclerview.widget.RecyclerView
 //}
 
 class NumberAdapter(
-    private var dataSet: List<Number> = emptyList(),
     private val onClicked: (Number) -> Unit,
     private val onLongClicked: (Number) -> Unit,
-) : RecyclerView.Adapter<NumberAdapter.ViewHolder>() {
+) : ListAdapter<Number, NumberAdapter.ViewHolder>(
+    object : ItemCallback<Number>() {
+        override fun areItemsTheSame(oldItem: Number, newItem: Number): Boolean {
+            return oldItem.value == newItem.value
+        }
+
+        override fun areContentsTheSame(oldItem: Number, newItem: Number): Boolean {
+            return oldItem == newItem
+        }
+    }
+) {
 
     /**
      * Provide a reference to the type of views that you are using
@@ -45,7 +56,7 @@ class NumberAdapter(
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        val number = dataSet[position]
+        val number = getItem(position)
 
         viewHolder.textView.text = number.value.toString()
 
@@ -65,22 +76,14 @@ class NumberAdapter(
         viewHolder.itemView.setOnClickListener {
             // 콜백으로 처리하는 부분으로 돌려줘야 함
 //            println(dataSet[viewHolder.adapterPosition])
-            onClicked(dataSet[viewHolder.adapterPosition])
+            onClicked(getItem(viewHolder.adapterPosition))
         }
 
         viewHolder.itemView.setOnLongClickListener {
-            onLongClicked(dataSet[viewHolder.adapterPosition])
+            onLongClicked(getItem(viewHolder.adapterPosition))
             return@setOnLongClickListener true
         }
 
-    }
-
-    // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = dataSet.size
-
-    fun submitList(numbers: List<Number>) {
-        dataSet = numbers
-        notifyDataSetChanged()
     }
 
 }
